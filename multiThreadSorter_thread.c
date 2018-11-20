@@ -14,7 +14,8 @@
    
    pidNode * head=NULL;
 	 
-   if(argc%2 ==0){ //even
+   //flag check open
+      if(argc%2 ==0){ //even
      printf("Incorrect Input\n");
      return -1; 
    } 
@@ -22,31 +23,99 @@
      printf("Incorrect Input\n");
      return -1; 
    } 
-   if(strcmp(argv[1],"-c")!=0){ //no -c
-     printf("Incorrect Input: No column flag\n");
+   if(argc<3){
+    printf("Incorrect Input: No column name\n");
      return -1; 
-   } 
-   if(strcmp(argv[2],"-d")==0||strcmp(argv[2],"-o")==0){ //no category
-     printf("Incorrect Input: No column name\n");
-     return -1;  
-   } 
-   else{//record column Name
-     colName=argv[2];
    }
-   if(argc>3){
-     if(strcmp(argv[3],"-d")==0){//input directory specified
-       inDir=argv[4];
-     }
-     else if(strcmp(argv[3],"-o")==0){//output directory specified
-       outDir=argv[4];
-     }
-     if(argc>5){
-       if(strcmp(argv[5],"-o")==0){//output directory specified
-             outDir=argv[6];
-       }
-     }
+
+   //if there is 1 input
+   if(argc==3){ 
+    if(strcmp(argv[1],"-c")!=0){
+      printf("Incorrect Input: No column flag\n");
+      return -1;
+    }
+    colName=argv[2];
    }
-       
+
+   //if there are 2 inputs
+   if(argc==5){ 
+    if(strcmp(argv[1],"-c")!=0 && strcmp(argv[3],"-c")!=0){
+      printf("Incorrect Input: No column flag\n");
+      return -1; 
+    }
+    if(strcmp(argv[1],"-d")!=0 && strcmp(argv[3],"-d")!=0 && strcmp(argv[1],"-o")!=0 && strcmp(argv[3],"-o")!=0){
+      printf("Incorrect Input: No column flag\n");
+      return -1;
+    }
+    if(strcmp(argv[1],"-c")==0){
+      colName=argv[2];
+      if(strcmp(argv[3],"-d")==0){ //directory specified
+        inDir=argv[4];
+      }
+      else{ //output directory specified
+        outDir=argv[4];
+      }
+    }
+    else{
+      colName=argv[4];
+      if(strcmp(argv[1],"-d")==0){ //directory specified
+        inDir=argv[2];
+      }
+      else{
+        outDir=argv[2]; //output directory specified
+      }
+    }
+   }
+
+   //if there are 3 inputs
+   if(argc==7){ 
+    if(strcmp(argv[1],"-c")!=0 && strcmp(argv[3],"-c")!=0 && strcmp(argv[5],"-c")!=0){
+      printf("Incorrect Input: No column flag\n");
+      return -1; 
+    }
+    if(strcmp(argv[1],"-d")!=0 && strcmp(argv[3],"-d")!=0 && strcmp(argv[5],"-d")!=0){
+      printf("Incorrect Input: No column flag\n");
+      return -1;
+    }
+    if(strcmp(argv[1],"-o")!=0 && strcmp(argv[3],"-o")!=0 && strcmp(argv[5],"-o")!=0){
+      printf("Incorrect Input: No column flag\n");
+      return -1;
+    }
+    if(strcmp(argv[1],"-c")==0){ //c first
+      colName=argv[2];
+      if(strcmp(argv[3],"-d") ==0){//c-d-o
+        inDir=argv[4];
+        outDir=argv[6];
+      }
+      else{ //c-o-d
+        inDir=argv[6];
+        outDir=argv[4];
+      }
+    }
+    else if(strcmp(argv[3],"-c")==0){ //c second
+      colName=argv[4];
+      if(strcmp(argv[1],"-d") ==0){//d-c-o
+        inDir=argv[2];
+        outDir=argv[6];
+      }
+      else{ //o-c-d
+        inDir=argv[6];
+        outDir=argv[2];
+      }
+    }
+    else{ //c last
+      colName=argv[6];
+      if(strcmp(argv[1],"-d") ==0){//d-o-c
+        inDir=argv[2];
+        outDir=argv[4];
+      }
+      else{ //o-d-c
+        inDir=argv[4];
+        outDir=argv[2];
+      }
+    }
+   }
+//end of flag check 
    int processCounter=0;
    DIR* dir; 
    DIR* out;
