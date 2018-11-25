@@ -6,10 +6,10 @@ typedef struct Node{
   struct Node *next;
 }Node;
 
-typedef struct pidNode{
+/*typedef struct pidNode{
   pid_t *pid;
   struct pidNode *next;
-}pidNode;
+}pidNode;*/
 
 int sorter(FILE *fp, char *colName, DIR *dir);
 Node* readfile(int colInd, FILE *fp);
@@ -22,12 +22,11 @@ Node* SortedMerge( Node* a, Node* b);
 void print( Node* a);
 void Finish(Node* head);
 
-
-void directChild(DIR* dir, pidNode * head, int processCounter);
+void directChild(DIR* dir , int processCounter);
 int isDirectory(char d_name[]);
-int isCSV(char d_name[]);
-pidNode* childpid(pidNode * head, pid_t pid);
-void printVals(pid_t pid, pidNode *head, int counter);
+//int isCSV(char d_name[]);
+//pidNode* childpid(pidNode * head, pid_t pid);
+//void printVals(pid_t pid, pidNode *head, int counter);
 
 typedef struct row{
 	char* color;
