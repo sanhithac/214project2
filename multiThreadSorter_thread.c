@@ -4,7 +4,7 @@
 #include <string.h> 
 #include <unistd.h>
 #include <sys/types.h> 
-#include "simpleCSVsorter.c" 
+#include "multiThreadSorter_thread.h" 
 
  int main(int argc, char** argv){ 
    //input and output directories
